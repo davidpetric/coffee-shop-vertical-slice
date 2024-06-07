@@ -1,0 +1,1 @@
+dotnet ef database drop --project Application --startup-project Api -v
