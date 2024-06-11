@@ -1,0 +1,94 @@
+<div class="p-10 flex flex-col gap-10 font-medium bg-white rounded-2xl">
+  <ul class="flex flex-row gap-10">
+    <li
+      class="cursor-pointer"
+      (click)="this.currentFormTab = 'login'"
+      [ngClass]="
+        this.currentFormTab == 'login' ? 'text-orange-400' : 'text-black'
+      "
+    >
+      Login
+    </li>
+
+    <li
+      class="cursor-pointer"
+      [ngClass]="
+        this.currentFormTab == 'login' ? 'text-black' : 'text-orange-400'
+      "
+      (click)="this.currentFormTab = 'register'"
+    >
+      Register
+    </li>
+  </ul>
+
+  <div class="flex flex-col">
+    @if(this.currentFormTab == 'login'){
+    <form [formGroup]="loginForm" class="flex flex-col gap-10" novalidate>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        formControlName="email"
+        class="block bg-white w-full rounded-full py-2 pl-10 pr-3 focus:outline-none shadow-md focus:ring-2 focus:ring-orange-950"
+        placeholder="Email"
+      />
+
+      <input
+        [ngClass]="{ 'text-red-500': !email?.valid }"
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        class="block bg-white w-full rounded-full py-2 pl-10 pr-3 focus:outline-none shadow-md focus:ring-2 focus:ring-orange-950"
+        placeholder="Password"
+      />
+
+      <button
+        class="w-30 h-14 bg-yellow-950 rounded-full text-white font-semibold place-content-center hover:opacity-80 inline-flex items-center gap-5"
+        type="button"
+        (click)="onLoginSubmit()"
+      >
+        Login
+      </button>
+    </form>
+    } @else {
+    <form class="flex flex-col gap-10">
+      <input
+        type="text"
+        id="display-name"
+        name="display-name"
+        formControlName="first-name"
+        class="block bg-white w-full rounded-full py-2 pl-10 pr-3 focus:outline-none shadow-md focus:ring-2 focus:ring-orange-950"
+        placeholder="Display Name"
+      />
+
+      <input
+        type="text"
+        id="email"
+        name="email"
+        formControlName="email"
+        class="block bg-white w-full rounded-full py-2 pl-10 pr-3 focus:outline-none shadow-md focus:ring-2 focus:ring-orange-950"
+        placeholder="Email"
+      />
+
+      <input
+        [ngClass]="{ 'text-red-500': !email?.valid }"
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        class="block bg-white w-full rounded-full py-2 pl-10 pr-3 focus:outline-none shadow-md focus:ring-2 focus:ring-orange-950"
+        placeholder="Password"
+      />
+
+      <button
+        type="button"
+        class="w-30 h-14 bg-yellow-950 rounded-full text-white font-semibold place-content-center hover:opacity-80 inline-flex items-center gap-5"
+        (click)="onRegisterSubmit()"
+      >
+        Register
+      </button>
+    </form>
+    }
+  </div>
+</div>
