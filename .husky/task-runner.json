@@ -1,6 +1,17 @@
 {
   "tasks": [
     {
+      "name": "commit-message-linter",
+      "command": "dotnet",
+      "args": [
+        "husky",
+        "exec",
+        ".husky/csx/commit-lint.csx",
+        "--args",
+        "${args}"
+      ]
+    },
+    {
       "name": "Run csharpier",
       "command": "dotnet",
       "args": ["csharpier", "${staged}"],
