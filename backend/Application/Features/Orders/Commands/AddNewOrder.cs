@@ -2,10 +2,9 @@
 
 using Application.Domain.Orders;
 using Application.Domain.Products;
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
-using Carter.ModelBinding;
+using Application.Infrastructure.Validation;
 
 using FluentValidation;
 using FluentValidation.Results;
@@ -18,12 +17,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class AddNewOrder : ICarterModule
+public class AddNewOrder : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder app)
     {
         app
-          .MapPost("api/orders", (ISender sender, [FromBody] AddNewOrderCommand command) => sender.Send(command))
+          .MapPost("orders", (ISender sender, [FromBody] AddNewOrderCommand command) => sender.Send(command))
           .ProducesValidationProblem()
           .WithTags("orders");
     }
@@ -45,7 +44,7 @@ public class AddNewOrder : ICarterModule
             ValidationResult result = await validator.ValidateAsync(request, cancellationToken);
             if (!result.IsValid)
             {
-                return Results.ValidationProblem(result.GetValidationProblems());
+                return Results.Problem(result.ToProblemDetails());
             }
 
             List<Product> products = await dbContext.Products.Where(x => x.Id > 0).ToListAsync();
@@ -61,7 +60,7 @@ public class AddNewOrder : ICarterModule
 
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            return Results.Created($"api/orders/{order.Id}", null);
+            return Results.Created($"orders/{order.Id}", null);
         }
     }
 }

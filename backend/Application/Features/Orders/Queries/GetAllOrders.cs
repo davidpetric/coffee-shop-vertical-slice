@@ -1,8 +1,7 @@
 ﻿namespace Application.Features.Orders.Queries;
 
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
 
 using MediatR;
 
@@ -10,12 +9,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class GetAllOrders : ICarterModule
+public class GetAllOrders : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder app)
     {
         app
-          .MapGet("api/orders", (ISender sender) => sender.Send(new GetAllOrdersQuery()))
+          .MapGet("orders", (ISender sender) => sender.Send(new GetAllOrdersQuery()))
           .WithTags("orders")
           .WithOpenApi();
     }

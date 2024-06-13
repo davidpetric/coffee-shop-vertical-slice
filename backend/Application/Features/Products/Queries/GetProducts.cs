@@ -1,9 +1,8 @@
 ﻿namespace Application.Features.Products.Queries;
 
 using Application.Domain.Products.ValueObjects;
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
 
 using MediatR;
 
@@ -12,11 +11,12 @@ using Microsoft.AspNetCore.Routing;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class GetProducts : ICarterModule
+public class GetProducts : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder builder)
     {
-        app.MapGet("api/products", (ISender sender) => sender.Send(new GetProductsQuery()))
+        builder
+            .MapGet("products", (ISender sender) => sender.Send(new GetProductsQuery()))
             .WithTags("products");
     }
 

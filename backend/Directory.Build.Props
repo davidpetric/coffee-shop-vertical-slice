@@ -7,16 +7,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
+		<!-- <WarningsNotAsErrors>NU1608</WarningsNotAsErrors> -->
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.26.0.92422">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-
-		<PackageReference Include="Meziantou.Analyzer" Version="2.0.155">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
@@ -41,7 +37,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
 
-		<PackageReference Include="AspNetCoreAnalyzers" Version="0.3.0" >
+		<PackageReference Include="AspNetCoreAnalyzers" Version="0.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>

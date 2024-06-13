@@ -1,17 +1,17 @@
 ﻿namespace Application.Features.Menu.Queries;
 
 using Application.Domain.Products.ValueObjects;
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
 
 using System.Linq;
 
-public class GetMenu : ICarterModule
+public class GetMenu : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder builder)
     {
-        app.MapGet("/api/menu", GetMenuProducts)
+        builder
+            .MapGet("menu", GetMenuProducts)
             .Produces<List<GetMenuProductResponse>>()
             .WithTags("menu")
             .WithDescription("Gets the shop menu.")
@@ -27,7 +27,7 @@ public class GetMenu : ICarterModule
             return TypedResults.NoContent();
         }
 
-        var products = coffeesDb.Products
+        List<GetMenuProductResponse> products = coffeesDb.Products
             .Select(
                 x =>
                     new GetMenuProductResponse(

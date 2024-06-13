@@ -1,8 +1,7 @@
 ﻿namespace Application.Features.Users.Queries;
 
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
 
 using MediatR;
 
@@ -10,13 +9,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class GetUsers : ICarterModule
+public class GetUsers : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder builder)
     {
-        app.MapGet("/api/users", (ISender sender) => sender.Send(new GetUsersQuery()))
-            .Produces<List<GetUserResponse>>()
-            .WithTags("users");
+        builder.MapGet("users", (ISender sender) => sender.Send(new GetUsersQuery()))
+               .Produces<List<GetUserResponse>>()
+               .WithTags("users");
     }
 
     public record GetUsersQuery() : IRequest<IResult>;

@@ -2,8 +2,6 @@
 
 using CSharpFunctionalExtensions;
 
-using System;
-
 public class Role : Entity
 {
     public Role()

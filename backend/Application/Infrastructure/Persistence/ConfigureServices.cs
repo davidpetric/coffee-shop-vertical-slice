@@ -1,13 +1,8 @@
 ﻿namespace Application.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 using Npgsql;
-
-using System.Diagnostics;
 
 public static class ConfigureServices
 {

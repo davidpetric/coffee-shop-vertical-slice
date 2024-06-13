@@ -1,10 +1,13 @@
+using Api.EndpointsExtensions;
+
 using Application;
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
 
-using Carter;
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -28,13 +31,17 @@ builder.Services.AddSwaggerGen(opt =>
     );
 });
 
-builder.Services.AddCarter();
-
 builder.Services.AddApplication(builder.Configuration);
 
 builder.Services.AddProblemDetails();
 
+builder.Services.AddEndpoints(typeof(ConfigureApplicationServices).Assembly);
+
 WebApplication app = builder.Build();
+
+app.MapGroup("api");
+
+app.RegisterEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
@@ -63,8 +70,6 @@ if (app.Environment.IsDevelopment())
 
     app.Map("/", () => Results.Redirect("/api-doc"));
 }
-
-app.MapCarter();
 
 await app.RunAsync();
 

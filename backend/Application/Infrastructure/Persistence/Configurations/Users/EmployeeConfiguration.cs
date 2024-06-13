@@ -1,6 +1,7 @@
 ﻿namespace Application.Infrastructure.Persistence.Configurations.Users;
 
 using Application.Domain.Users;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

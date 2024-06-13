@@ -2,9 +2,8 @@
 
 using Application.Domain.Products;
 using Application.Domain.Products.ValueObjects;
+using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
-
-using Carter;
 
 using FluentValidation;
 
@@ -16,23 +15,18 @@ using Microsoft.AspNetCore.Routing;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class AddNewProduct : ICarterModule
+public class AddNewProduct : IEndpointDefinition
 {
-    public void AddRoutes(IEndpointRouteBuilder app)
+    public void AddRoute(IEndpointRouteBuilder builder)
     {
-        app.MapPost(
-            "/api/products",
-            (ISender sender, [FromBody] AddNewProductCommand command) => sender.Send(command)
-        )
-            .WithTags("products");
+        builder.MapPost("products", (ISender sender, [FromBody] AddNewProductCommand command) => sender.Send(command))
+               .WithTags("products");
     }
 
     public record AddNewProductCommand(string Name, string Description, decimal Price, long ProductTypeId) : IRequest<IResult>;
 
     public class AddNewProductCommandValidator : AbstractValidator<AddNewProductCommand>
-    {
-
-    }
+    { }
 
     public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext) : IRequestHandler<AddNewProductCommand, IResult>
     {
@@ -50,7 +44,7 @@ public class AddNewProduct : ICarterModule
 
             await dbContext.SaveChangesAsync();
 
-            return Results.CreatedAtRoute($"api/products/{product.Id}", null);
+            return Results.CreatedAtRoute($"products/{product.Id}", null);
         }
     }
 }

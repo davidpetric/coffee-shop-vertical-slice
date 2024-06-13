@@ -2,6 +2,10 @@
 
 	<PropertyGroup>
 		<UserSecretsId>8c613d8c-2e26-4f4d-aaad-cfd1c3469c0e</UserSecretsId>
+		<IsPublishable>true</IsPublishable>
+		<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+		<!--the name of the container image-->
+		<ContainerRepository>dotnet-coffee-vertical-slice</ContainerRepository>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -10,9 +14,6 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.7.0" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Csharp" Version="4.7.0" />
-
 	</ItemGroup>
 
 	<ItemGroup>
@@ -21,7 +22,7 @@
 
 	<!-- set HUSKY to 0 in CI/CD disable this -->
 	<Target Name="husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0">
-		<Exec Command="dotnet tool restore"  StandardOutputImportance="Low" StandardErrorImportance="High"  WorkingDirectory="../../"/>
+		<Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
 		<Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
 	</Target>
 </Project>
