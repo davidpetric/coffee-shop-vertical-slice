@@ -12,10 +12,23 @@
       ]
     },
     {
+      "name": "dotnet-format-staged",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "./backend/Backend.sln",
+        "--include=",
+        "${staged}",
+        "--verbosity",
+        "d"
+      ],
+      "include": ["**/*.cs"]
+    },
+    {
       "name": "Run csharpier",
       "command": "dotnet",
       "args": ["csharpier", "${staged}"],
-      "include": ["**/.cs"]
+      "include": ["**/*.cs"]
     }
   ]
 }
