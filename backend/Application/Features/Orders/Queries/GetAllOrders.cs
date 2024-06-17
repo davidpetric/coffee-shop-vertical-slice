@@ -26,7 +26,7 @@ public record GetOrdersResponse(long OrderId, decimal TotalPrice);
 
 public sealed class GetAllOrdersQueryHandler(CoffeeShopDbContext dbContext) : IRequestHandler<GetAllOrdersQuery, List<GetOrdersResponse>>
 {
-    public async Task<List<GetOrdersResponse>> HandleAsync(GetAllOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<List<GetOrdersResponse>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
     {
         List<GetOrdersResponse> orders = await dbContext.Orders
             .Select(x => new GetOrdersResponse(x.Id, x.TotalPrice))

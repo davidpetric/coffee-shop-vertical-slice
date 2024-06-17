@@ -29,9 +29,10 @@ public record AddNewProductCommand(string Name, string Description, decimal Pric
 public class AddNewProductCommandValidator : AbstractValidator<AddNewProductCommand>
 { }
 
-public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext) : IRequestHandler<AddNewProductCommand, IResult>
+public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext)
+    : IRequestHandler<AddNewProductCommand, IResult>
 {
-    public async Task<IResult> HandleAsync(AddNewProductCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(AddNewProductCommand request, CancellationToken cancellationToken)
     {
         Product product = new()
         {

@@ -28,13 +28,10 @@ public record GetProductResponse(long Id, string Name, string ProductType);
 public sealed class GetProductsQueryHandler(CoffeeShopDbContext context)
     : IRequestHandler<GetProductsQuery, List<GetProductResponse>>
 {
-    public Task<List<GetProductResponse>> HandleAsync(
-        GetProductsQuery _,
-        CancellationToken cancellationToken
-    )
+    public Task<List<GetProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-
-        //TODO: read from cache first.
-        return context.Products.Select(x => new GetProductResponse(x.Id, x.Name, ProductTypeEnum.FromValue(x.ProductTypeId).Name)).ToListAsync(cancellationToken);
+        return context.Products
+            .Select(x => new GetProductResponse(x.Id, x.Name, ProductTypeEnum.FromValue(x.ProductTypeId).Name))
+            .ToListAsync(cancellationToken);
     }
 }

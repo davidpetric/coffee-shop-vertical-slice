@@ -25,10 +25,7 @@ public record GetUserResponse(long Id, string DisplayName, string[] Roles, strin
 
 public class GetUsersQueryRequestHandler(CoffeeShopDbContext coffeesDb) : IRequestHandler<GetUsersQuery, IResult>
 {
-    public async Task<IResult> HandleAsync(
-        GetUsersQuery _,
-        CancellationToken cancellationToken
-    )
+    public async Task<IResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         if (!await coffeesDb.Users.AnyAsync())
         {

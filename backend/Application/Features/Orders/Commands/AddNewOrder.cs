@@ -38,9 +38,10 @@ public class AddNewOrderCommandValidator : AbstractValidator<AddNewOrderCommand>
     }
 }
 
-public sealed class AddNewOrderCommandHandler(CoffeeShopDbContext dbContext, IValidator<AddNewOrderCommand> validator) : IRequestHandler<AddNewOrderCommand, IResult>
+public sealed class AddNewOrderCommandHandler(CoffeeShopDbContext dbContext, IValidator<AddNewOrderCommand> validator)
+    : IRequestHandler<AddNewOrderCommand, IResult>
 {
-    public async Task<IResult> HandleAsync(AddNewOrderCommand request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(AddNewOrderCommand request, CancellationToken cancellationToken)
     {
         ValidationResult result = await validator.ValidateAsync(request, cancellationToken);
         if (!result.IsValid)
