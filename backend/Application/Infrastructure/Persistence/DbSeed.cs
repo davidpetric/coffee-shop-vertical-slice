@@ -153,13 +153,11 @@ public static class DbSeed
                 };
 
             List<Product> coffees =
-            [
-                ..productNames.Select(name => new Product()
-                {
-                    Name = name.Key,
-                    ProductTypeId = name.Value,
-                }).ToList(),
-            ];
+              productNames.Select(name => new Product()
+              {
+                  Name = name.Key,
+                  ProductTypeId = name.Value,
+              }).ToList();
 
             products.AddRange(coffees);
         }
