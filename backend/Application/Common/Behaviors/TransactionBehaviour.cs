@@ -1,5 +1,4 @@
 namespace Application.Common.Behaviors;
-
 using Application.Infrastructure.Persistence;
 
 using MediatR;
@@ -11,11 +10,21 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-public class TransactionBehavior<TRequest, TResponse>(
-    ILogger<TransactionBehavior<TRequest, TResponse>> logger,
-    CoffeeShopDbContext dbContext) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public partial class TransactionBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
-    [SuppressMessage("Major Code Smell", "S2139:Exceptions should be either logged or rethrown but not both", Justification = "<Pending>")]
+    private readonly ILogger<TransactionBehavior<TRequest, TResponse>> logger;
+    private readonly CoffeeShopDbContext dbContext;
+
+    public TransactionBehavior(
+        ILogger<TransactionBehavior<TRequest, TResponse>> logger,
+        CoffeeShopDbContext dbContext
+    )
+    {
+        this.logger = logger;
+        this.dbContext = dbContext;
+    }
+
     public async Task<TResponse> Handle(
         TRequest request,
         [NotNull] RequestHandlerDelegate<TResponse> next,
@@ -24,8 +33,6 @@ public class TransactionBehavior<TRequest, TResponse>(
     {
         try
         {
-            logger.LogInformation("Begin sql transaction.");
-
             await dbContext.Database.BeginTransactionAsync(cancellationToken);
 
             TResponse? response = await next();
@@ -36,9 +43,18 @@ public class TransactionBehavior<TRequest, TResponse>(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Rollback, {ExceptionMessage}", ex.Message);
+            LogTransactionRollbackReason(ex);
+
             await dbContext.Database.RollbackTransactionAsync(cancellationToken);
             throw;
         }
     }
+
+    [LoggerMessage(0, LogLevel.Error, "Sql transaction failed because: {ExceptionReason}")]
+    [SuppressMessage(
+        "LoggingGenerator",
+        "SYSLIB1013:Don't include exception parameters as templates in the logging message",
+        Justification = "<Pending>"
+    )]
+    partial void LogTransactionRollbackReason(Exception exceptionReason);
 }

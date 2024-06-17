@@ -10,16 +10,21 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal sealed class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
+public partial class OrderCreatedHandler(ILogger<OrderCreatedHandler> logger)
     : INotificationHandler<DomainEventNotification<OrderCreatedEvent>>
 {
+    private readonly ILogger _logger = logger;
+
     public Task Handle(
         DomainEventNotification<OrderCreatedEvent> notification,
         CancellationToken cancellationToken
     )
     {
-        logger.LogWarning("New Order Created: {OrderCreatedEvent}", notification.DomainEvent);
+        LogNewOrderCreated(notification.DomainEvent.Order);
 
         return Task.CompletedTask;
     }
+
+    [LoggerMessage(0, LogLevel.Information, "New order created {order}")]
+    partial void LogNewOrderCreated(Order order);
 }
