@@ -17,34 +17,34 @@ using System.Threading.Tasks;
 
 public class AddNewProduct : IEndpointDefinition
 {
-    public void AddRoute(IEndpointRouteBuilder builder)
+    public void AddRoutes(IEndpointRouteBuilder builder)
     {
         builder.MapPost("products", (ISender sender, [FromBody] AddNewProductCommand command) => sender.Send(command))
                .WithTags("products");
     }
+}
 
-    public record AddNewProductCommand(string Name, string Description, decimal Price, long ProductTypeId) : IRequest<IResult>;
+public record AddNewProductCommand(string Name, string Description, decimal Price, long ProductTypeId) : IRequest<IResult>;
 
-    public class AddNewProductCommandValidator : AbstractValidator<AddNewProductCommand>
-    { }
+public class AddNewProductCommandValidator : AbstractValidator<AddNewProductCommand>
+{ }
 
-    public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext) : IRequestHandler<AddNewProductCommand, IResult>
+public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext) : IRequestHandler<AddNewProductCommand, IResult>
+{
+    public async Task<IResult> HandleAsync(AddNewProductCommand request, CancellationToken cancellationToken)
     {
-        public async Task<IResult> Handle(AddNewProductCommand request, CancellationToken cancellationToken)
+        Product product = new()
         {
-            Product product = new()
-            {
-                Name = request.Name,
-                Description = request.Description,
-                Price = request.Price,
-                ProductTypeId = ProductTypeEnum.FromValue(request.ProductTypeId),
-            };
+            Name = request.Name,
+            Description = request.Description,
+            Price = request.Price,
+            ProductTypeId = ProductTypeEnum.FromValue(request.ProductTypeId),
+        };
 
-            dbContext.Add(product);
+        dbContext.Add(product);
 
-            await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
 
-            return Results.CreatedAtRoute($"products/{product.Id}", null);
-        }
+        return Results.CreatedAtRoute($"products/{product.Id}", null);
     }
 }

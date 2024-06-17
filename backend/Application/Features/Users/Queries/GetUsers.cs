@@ -11,32 +11,32 @@ using System.Threading.Tasks;
 
 public class GetUsers : IEndpointDefinition
 {
-    public void AddRoute(IEndpointRouteBuilder builder)
+    public void AddRoutes(IEndpointRouteBuilder builder)
     {
         builder.MapGet("users", (ISender sender) => sender.Send(new GetUsersQuery()))
                .Produces<List<GetUserResponse>>()
                .WithTags("users");
     }
+}
 
-    public record GetUsersQuery() : IRequest<IResult>;
+public record GetUsersQuery() : IRequest<IResult>;
 
-    public record GetUserResponse(long Id, string DisplayName, string[] Roles, string EmailAddress);
+public record GetUserResponse(long Id, string DisplayName, string[] Roles, string EmailAddress);
 
-    public class GetUsersQueryRequestHandler(CoffeeShopDbContext coffeesDb) : IRequestHandler<GetUsersQuery, IResult>
+public class GetUsersQueryRequestHandler(CoffeeShopDbContext coffeesDb) : IRequestHandler<GetUsersQuery, IResult>
+{
+    public async Task<IResult> HandleAsync(
+        GetUsersQuery _,
+        CancellationToken cancellationToken
+    )
     {
-        public async Task<IResult> Handle(
-            GetUsersQuery _,
-            CancellationToken cancellationToken
-        )
+        if (!await coffeesDb.Users.AnyAsync())
         {
-            if (!await coffeesDb.Users.AnyAsync())
-            {
-                return TypedResults.NoContent();
-            }
-
-            List<GetUserResponse> users = await coffeesDb.Users.Select(x => new GetUserResponse(x.Id, x.GetDisplayName(), x.Roles.Select(x => x.Name).ToArray(), x.EmailAddress.Email)).ToListAsync();
-
-            return TypedResults.Ok(users);
+            return TypedResults.NoContent();
         }
+
+        List<GetUserResponse> users = await coffeesDb.Users.Select(x => new GetUserResponse(x.Id, x.GetDisplayName(), x.Roles.Select(x => x.Name).ToArray(), x.EmailAddress.Email)).ToListAsync();
+
+        return TypedResults.Ok(users);
     }
 }

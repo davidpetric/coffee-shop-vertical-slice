@@ -17,7 +17,7 @@ public static class EndpointExtension
             .Where(
                 x =>
                     x is { IsAbstract: false, IsInterface: false }
-                    && x.IsAssignableFrom(typeof(IEndpointDefinition))
+                    && x.ImplementedInterfaces.Any(x => x == typeof(IEndpointDefinition))
             )
             .Select(x => ServiceDescriptor.Transient(typeof(IEndpointDefinition), x))
             .ToArray();
@@ -27,17 +27,17 @@ public static class EndpointExtension
         return services;
     }
 
-    public static WebApplication RegisterEndpoints(this WebApplication builder)
+    public static WebApplication RegisterEndpoints(this WebApplication app)
     {
         foreach (
-            IEndpointDefinition endpoint in builder.Services.GetRequiredService<
+            IEndpointDefinition endpointDefinition in app.Services.GetRequiredService<
                 IEnumerable<IEndpointDefinition>
             >()
         )
         {
-            endpoint.AddRoute(builder);
+            endpointDefinition.AddRoutes(app);
         }
 
-        return builder;
+        return app;
     }
 }

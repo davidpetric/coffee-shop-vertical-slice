@@ -8,7 +8,7 @@ using System.Linq;
 
 public class GetMenu : IEndpointDefinition
 {
-    public void AddRoute(IEndpointRouteBuilder builder)
+    public void AddRoutes(IEndpointRouteBuilder builder)
     {
         builder
             .MapGet("menu", GetMenuProducts)
@@ -40,6 +40,6 @@ public class GetMenu : IEndpointDefinition
 
         return TypedResults.Ok(products);
     }
-
-    public record GetMenuProductResponse(long Id, string Name, string Dsc);
 }
+
+public record GetMenuProductResponse(long Id, string Name, string Dsc);
