@@ -1,11 +1,11 @@
-﻿namespace Application.Infrastructure.Persistence.Configurations;
+namespace Application.Infrastructure.Persistence.Configurations;
 
 using Application.Domain.Products;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-class ProductConfiguration : IEntityTypeConfiguration<Product>
+sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {

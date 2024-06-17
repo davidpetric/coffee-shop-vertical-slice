@@ -1,8 +1,8 @@
-﻿namespace Application.Features.Products.Commands;
+namespace Application.Features.Products.Commands;
 
 using Application.Domain.Products;
 using Application.Domain.Products.ValueObjects;
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 
 using FluentValidation;
@@ -34,17 +34,19 @@ public class AddNewProductCommandHandler(CoffeeShopDbContext dbContext)
 {
     public async Task<IResult> Handle(AddNewProductCommand request, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(request);
+
         Product product = new()
         {
             Name = request.Name,
             Description = request.Description,
             Price = request.Price,
-            ProductTypeId = ProductTypeEnum.FromValue(request.ProductTypeId),
+            ProductTypeId = Domain.Products.ValueObjects.ProductType.FromValue(request.ProductTypeId),
         };
 
         dbContext.Add(product);
 
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         return Results.CreatedAtRoute($"products/{product.Id}", null);
     }

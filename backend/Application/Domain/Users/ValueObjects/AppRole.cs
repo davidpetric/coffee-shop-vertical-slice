@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Users.ValueObjects;
+namespace Application.Domain.Users.ValueObjects;
 
 using Ardalis.SmartEnum;
 

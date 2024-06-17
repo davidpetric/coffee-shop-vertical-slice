@@ -1,7 +1,7 @@
-﻿namespace Application.Features.Products.Queries;
+namespace Application.Features.Products.Queries;
 
 using Application.Domain.Products.ValueObjects;
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 
 using MediatR;
@@ -31,7 +31,7 @@ public sealed class GetProductsQueryHandler(CoffeeShopDbContext context)
     public Task<List<GetProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
         return context.Products
-            .Select(x => new GetProductResponse(x.Id, x.Name, ProductTypeEnum.FromValue(x.ProductTypeId).Name))
+            .Select(x => new GetProductResponse(x.Id, x.Name, ProductType.FromValue(x.ProductTypeId).Name))
             .ToListAsync(cancellationToken);
     }
 }

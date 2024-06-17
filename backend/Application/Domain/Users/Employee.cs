@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Users;
+namespace Application.Domain.Users;
 
 using CSharpFunctionalExtensions;
 

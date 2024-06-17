@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Orders.Queries;
+namespace Application.Features.Orders.Queries;
 
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 
 using MediatR;

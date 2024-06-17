@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Users;
+namespace Application.Domain.Users;
 
 using Application.Common.ValueObjects;
 
@@ -28,7 +28,7 @@ public class User : Entity
 
     public DateTimeOffset? LastLogin { get; set; }
 
-    public List<Role> Roles { get; set; } = [];
+    public List<Role> Roles { get; } = [];
 
     public long? EmployeeId { get; set; }
 

@@ -1,13 +1,9 @@
 using Api.EndpointsExtensions;
 
 using Application;
-using Application.Infrastructure.Module;
 using Application.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
-using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

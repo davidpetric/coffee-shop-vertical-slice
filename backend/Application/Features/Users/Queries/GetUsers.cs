@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Users.Queries;
+namespace Application.Features.Users.Queries;
 
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 
 using MediatR;
@@ -27,12 +27,14 @@ public class GetUsersQueryRequestHandler(CoffeeShopDbContext coffeesDb) : IReque
 {
     public async Task<IResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
-        if (!await coffeesDb.Users.AnyAsync())
+        ArgumentNullException.ThrowIfNull(request);
+
+        if (!await coffeesDb.Users.AnyAsync(cancellationToken: cancellationToken))
         {
             return TypedResults.NoContent();
         }
 
-        List<GetUserResponse> users = await coffeesDb.Users.Select(x => new GetUserResponse(x.Id, x.GetDisplayName(), x.Roles.Select(x => x.Name).ToArray(), x.EmailAddress.Email)).ToListAsync();
+        List<GetUserResponse> users = await coffeesDb.Users.Select(x => new GetUserResponse(x.Id, x.GetDisplayName(), x.Roles.Select(x => x.Name).ToArray(), x.EmailAddress.Email)).ToListAsync(cancellationToken: cancellationToken);
 
         return TypedResults.Ok(users);
     }

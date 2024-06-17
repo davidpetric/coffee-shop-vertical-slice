@@ -1,4 +1,4 @@
-﻿namespace Application.Infrastructure.Services;
+namespace Application.Infrastructure.Services;
 
 using Application.Common;
 
@@ -6,7 +6,7 @@ using MediatR;
 
 using System.Threading.Tasks;
 
-internal class DomainEventService(IPublisher publisher) : IDomainEventService
+internal sealed class DomainEventService(IPublisher publisher) : IDomainEventService
 {
     public Task PublishAsync(DomainEvent domainEvent, CancellationToken cancellationToken)
     {

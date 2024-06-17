@@ -1,4 +1,4 @@
-﻿namespace Application.Infrastructure.Module;
+namespace Application.Infrastructure.Endpoints;
 
 using Microsoft.AspNetCore.Routing;
 

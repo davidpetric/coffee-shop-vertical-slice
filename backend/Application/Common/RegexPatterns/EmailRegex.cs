@@ -1,4 +1,4 @@
-﻿namespace Application.Common.Regexes;
+namespace Application.Common.Regexes;
 
 using System.Text.RegularExpressions;
 

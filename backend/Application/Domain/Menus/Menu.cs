@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Menus;
+namespace Application.Domain.Menus;
 
 using Application.Domain.Products;
 
@@ -8,5 +8,5 @@ public class Menu : Entity
 {
     public bool IsActive { get; set; }
 
-    public List<Product> Products { get; set; } = [];
+    public List<Product> Products { get; } = [];
 }

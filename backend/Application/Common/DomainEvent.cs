@@ -1,4 +1,4 @@
-﻿namespace Application.Common;
+namespace Application.Common;
 
 public abstract class DomainEvent
 {

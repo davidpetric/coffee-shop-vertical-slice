@@ -1,10 +1,10 @@
-﻿namespace Application.Infrastructure.Persistence.Configurations;
+namespace Application.Infrastructure.Persistence.Configurations;
 
 using Application.Domain.Orders;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-class OrderConfiguration : IEntityTypeConfiguration<Order>
+sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {

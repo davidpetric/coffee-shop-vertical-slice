@@ -1,8 +1,8 @@
-﻿namespace Application.Features.Orders.Commands;
+namespace Application.Features.Orders.Commands;
 
 using Application.Domain.Orders;
 using Application.Domain.Products;
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 using Application.Infrastructure.Validation;
 
@@ -49,7 +49,7 @@ public sealed class AddNewOrderCommandHandler(CoffeeShopDbContext dbContext, IVa
             return Results.Problem(result.ToProblemDetails());
         }
 
-        List<Product> products = await dbContext.Products.Where(x => x.Id > 0).ToListAsync();
+        List<Product> products = await dbContext.Products.Where(x => x.Id > 0).ToListAsync(cancellationToken: cancellationToken);
 
         Order order = new()
         {

@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Orders;
+namespace Application.Domain.Orders;
 
 using Application.Common;
 

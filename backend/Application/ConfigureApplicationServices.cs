@@ -1,4 +1,4 @@
-﻿namespace Application;
+namespace Application;
 
 using Application.Common.Behaviors;
 using Application.Infrastructure.Persistence;

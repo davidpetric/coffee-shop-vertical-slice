@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Products;
+namespace Application.Domain.Products;
 
 using CSharpFunctionalExtensions;
 

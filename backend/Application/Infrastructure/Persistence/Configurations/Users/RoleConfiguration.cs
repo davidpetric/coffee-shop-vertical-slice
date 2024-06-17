@@ -1,11 +1,11 @@
-﻿namespace Application.Infrastructure.Persistence.Configurations.Users;
+namespace Application.Infrastructure.Persistence.Configurations.Users;
 
 using Application.Domain.Users;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-class RoleConfiguration : IEntityTypeConfiguration<Role>
+sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {

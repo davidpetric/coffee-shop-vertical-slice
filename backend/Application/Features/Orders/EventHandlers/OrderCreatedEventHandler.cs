@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Orders.EventHandlers;
+namespace Application.Features.Orders.EventHandlers;
 
 using Application.Common;
 using Application.Domain.Orders;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-internal class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
+internal sealed class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
     : INotificationHandler<DomainEventNotification<OrderCreatedEvent>>
 {
     public Task Handle(

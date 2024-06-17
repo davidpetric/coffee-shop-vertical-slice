@@ -1,4 +1,4 @@
-﻿namespace Application.Infrastructure.Persistence;
+namespace Application.Infrastructure.Persistence;
 
 using Application.Common.ValueObjects;
 using Application.Domain.Products;
@@ -104,16 +104,16 @@ public static class DbSeed
 
     private static void SeedProductTypes(CoffeeShopDbContext context)
     {
-        List<ProductType> productTypes = new(ProductTypeEnum.List.Count);
+        List<Domain.Products.ProductType> productTypes = new(Domain.Products.ValueObjects.ProductType.List.Count);
 
-        foreach (ProductTypeEnum @enum in ProductTypeEnum.List)
+        foreach (Domain.Products.ValueObjects.ProductType @enum in Domain.Products.ValueObjects.ProductType.List)
         {
             if (context.ProductTypes.Any(a => a.Id == @enum.Value))
             {
                 continue;
             }
 
-            ProductType prd = new() { Name = @enum.Name };
+            Domain.Products.ProductType prd = new() { Name = @enum.Name };
             prd.SetId(@enum.Value);
             productTypes.Add(prd);
         }
@@ -132,24 +132,24 @@ public static class DbSeed
             Dictionary<string, long> productNames =
                 new(StringComparer.Ordinal)
                 {
-                      { "Black", ProductTypeEnum.Coffee.Value },
-                      { "Latte",ProductTypeEnum.Coffee.Value },
-                      { "Cappuccino", ProductTypeEnum.Coffee.Value },
-                      { "Americano", ProductTypeEnum.Coffee.Value },
-                      { "Espresso", ProductTypeEnum.Coffee.Value },
-                      { "Doppio", ProductTypeEnum.Coffee.Value },
-                      { "Cortado", ProductTypeEnum.Coffee.Value },
-                      { "Red Eye",ProductTypeEnum.Coffee.Value  },
-                      { "Galao", ProductTypeEnum.Coffee.Value },
-                      { "Lungo", ProductTypeEnum.Coffee.Value },
-                      { "Macchiato", ProductTypeEnum.Coffee.Value },
-                      { "Mocha", ProductTypeEnum.Coffee.Value },
-                      { "Ristretto", ProductTypeEnum.Coffee.Value },
-                      { "Flat White",ProductTypeEnum.Coffee.Value  },
-                      { "Affogato", ProductTypeEnum.Coffee.Value },
-                      { "Cafe Au Lait", ProductTypeEnum.Coffee.Value },
-                      { "Irish",ProductTypeEnum.Coffee.Value },
-                      { "CocaCola",ProductTypeEnum.Coffee.Value },
+                      { "Black", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Latte", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Cappuccino", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Americano", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Espresso", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Doppio", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Cortado", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Red Eye", Domain.Products.ValueObjects.ProductType.Coffee.Value  },
+                      { "Galao", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Lungo", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Macchiato", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Mocha", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Ristretto", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Flat White", Domain.Products.ValueObjects.ProductType.Coffee.Value  },
+                      { "Affogato", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Cafe Au Lait", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "Irish", Domain.Products.ValueObjects.ProductType.Coffee.Value },
+                      { "CocaCola", Domain.Products.ValueObjects.ProductType.Coffee.Value },
                 };
 
             List<Product> coffees =

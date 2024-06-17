@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Products.Beverages.Coffees.ValueObjects;
+namespace Application.Domain.Products.Beverages.Coffees.ValueObjects;
 
 using Ardalis.SmartEnum;
 

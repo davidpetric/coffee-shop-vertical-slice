@@ -1,4 +1,4 @@
-﻿namespace Application.Infrastructure.Persistence;
+namespace Application.Infrastructure.Persistence;
 
 using Application.Common;
 using Application.Domain.Menus;
@@ -9,11 +9,12 @@ using Application.Infrastructure.Services;
 
 using Microsoft.EntityFrameworkCore;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 public class CoffeeShopDbContext(DbContextOptions<CoffeeShopDbContext> options, IDomainEventService domainEventService) : DbContext(options)
 {
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating([NotNull] ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 

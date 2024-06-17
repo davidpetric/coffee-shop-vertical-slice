@@ -1,6 +1,6 @@
-﻿namespace Api.EndpointsExtensions;
+namespace Api.EndpointsExtensions;
 
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

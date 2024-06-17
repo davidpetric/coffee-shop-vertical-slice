@@ -1,9 +1,10 @@
-﻿namespace Application.Features.Menu.Queries;
+namespace Application.Features.Menu.Queries;
 
 using Application.Domain.Products.ValueObjects;
-using Application.Infrastructure.Module;
+using Application.Infrastructure.Endpoints;
 using Application.Infrastructure.Persistence;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 public class GetMenu : IEndpointDefinition
@@ -18,8 +19,8 @@ public class GetMenu : IEndpointDefinition
             .WithOpenApi();
     }
 
-    public Results<Ok<List<GetMenuProductResponse>>, NoContent> GetMenuProducts(
-        CoffeeShopDbContext coffeesDb
+    public static Results<Ok<List<GetMenuProductResponse>>, NoContent> GetMenuProducts(
+        [NotNull] CoffeeShopDbContext coffeesDb
     )
     {
         if (!coffeesDb.Menus.Any())
@@ -33,7 +34,7 @@ public class GetMenu : IEndpointDefinition
                     new GetMenuProductResponse(
                         x.Id,
                         x.Name,
-                        ProductTypeEnum.FromValue(x.ProductTypeId).Name
+                        ProductType.FromValue(x.ProductTypeId).Name
                     )
             )
             .ToList();
