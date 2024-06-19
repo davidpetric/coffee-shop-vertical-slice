@@ -1,27 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-	<PropertyGroup>
-		<UserSecretsId>8c613d8c-2e26-4f4d-aaad-cfd1c3469c0e</UserSecretsId>
-		<IsPublishable>true</IsPublishable>
-		<EnableSdkContainerSupport>true</EnableSdkContainerSupport>
-		<!--the name of the container image-->
-		<ContainerRepository>dotnet-coffee-vertical-slice</ContainerRepository>
-	</PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>8c613d8c-2e26-4f4d-aaad-cfd1c3469c0e</UserSecretsId>
+    <IsPublishable>true</IsPublishable>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <!--the name of the container image-->
+    <ContainerRepository>dotnet-coffee-vertical-slice</ContainerRepository>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Swashbuckle.AspNetCore" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Application\Application.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+  </ItemGroup>
 
-	<!-- set HUSKY to 0 in CI/CD disable this -->
-	<Target Name="husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0">
-		<Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
-		<Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
-	</Target>
+  <!-- set HUSKY to 0 in CI/CD disable this -->
+  <Target Name="husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0">
+    <Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
+    <Exec Command="dotnet husky install" StandardOutputImportance="Low" StandardErrorImportance="High" WorkingDirectory="../../" />
+  </Target>
 </Project>
